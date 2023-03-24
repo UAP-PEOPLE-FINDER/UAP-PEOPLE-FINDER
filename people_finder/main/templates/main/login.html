@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <!-- Required meta tags -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!--Bootstrap CSS-->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+      {% load static %}
+      <link rel="stylesheet" href="{% static 'main/theme.css' %}">
+    </head>
+    <body>
+        
+    {% include 'main/navbar.html' %}
+
+    <!--Signup form-->
+    {% comment %} {% extends "main/header.html" %} {% endcomment %}
+
+    {% block content %} 
+
+    {% load crispy_forms_tags %}         
+
+    <!--Register--> 
+    <div class="container py-5">
+        {% include 'main/messages.html' %}
+        <h1>Login</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ login_form|crispy }}
+            <button class="btn btn-primary" type="submit">Login</button>
+            <a style="padding-left: 10px" href="password_reset">Forgor password? 💀</a>
+        </form>
+        <p class="text-right">If you don't have an account, <a href="signup">signup</a> instead.</p>
+    </div>
+
+    {% endblock %}
+
+    </body>
+</html>
