@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/3.0.0/css/ionicons.css" rel="stylesheet">
+      {% load static %}
+      <link rel="stylesheet" href="{% static 'main/theme.css' %}">
+    </head>
+    <body>
+
+    {% include 'main/navbar.html' %}
+    <!--Signup form-->
+    {% comment %} {% extends "main/header.html" %} {% endcomment %}
+
+    {% block content %} 
+
+    {% load crispy_forms_tags %}         
+    
+    <!--Register--> 
+    <div class="container py-5">
+        {% include 'main/messages.html' %}
+        <h2 class="font-weight-bold mt-3">Search</h2>
+		<hr>
+		<p></p>
+        <form method="POST">
+            {% csrf_token %}
+            {{ search_form|crispy }}                    
+            <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+        <br>
+        <br>
+        <br>
+        {% if table %}
+        {% load django_tables2 %} 
+        {% render_table table %}
+        {% endif %}
+    </div>
+
+    {% endblock %}
+
+    </body>
+</html>
