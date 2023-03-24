@@ -13,3 +13,7 @@ class ProfileAdmin(admin.ModelAdmin):
 
 class InterestAdmin(admin.ModelAdmin):
     fields = ["username", "interest1", "link", "bio"]
+
+admin.site.register(ListofInterests, ListofInterestsAdmin)
+admin.site.register(Profile, ProfileAdmin)
+admin.site.register(Interest, InterestAdmin)
