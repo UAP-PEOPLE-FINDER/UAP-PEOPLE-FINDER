@@ -302,8 +302,7 @@ def view_profile(request, profile_id):
     d = dict()
     d['first_name'] = profile_obj.first_name
     d['last_name'] = profile_obj.last_name
-<<<<<<< Updated upstream
-    d['display_picture'] = profile_obj.display_picture
+    d['display_picture'] = profile_obj.display_picture.url
 
 
     inter = Interest.objects.filter(
@@ -318,9 +317,7 @@ def view_profile(request, profile_id):
         d[j] = obj.bio
         d[l] = obj.link
 
-=======
-    d['display_picture'] = profile_obj.display_picture.url
->>>>>>> Stashed changes
+    
     return render(request=request,
                     template_name="main/view_profile.html",
                     context={"profile":d},)
