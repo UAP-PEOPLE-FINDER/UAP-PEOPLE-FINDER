@@ -10,3 +10,6 @@ class ListofInterestsAdmin(admin.ModelAdmin):
 
 class ProfileAdmin(admin.ModelAdmin):
     fields = get_model_fields(Profile)
+
+class InterestAdmin(admin.ModelAdmin):
+    fields = ["username", "interest1", "link", "bio"]
