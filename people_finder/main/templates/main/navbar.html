@@ -1,0 +1,36 @@
+<div class="container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">UAP People Finder</a>
+  
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="False" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav ml-auto">
+          {% if user.is_authenticated %}
+          
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'main:logout' %}">Logout</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'main:profile' %}">Welcome, {{user.username}}</a>
+          </li>
+  
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'main:search' %}">Search User</a>
+          </li>
+    
+          {% else %}
+    
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'main:login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="{% url 'main:signup' %}">Signup</a>
+            </li>
+    
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+  <div>
