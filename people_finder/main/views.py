@@ -137,13 +137,13 @@ def profile_request(request):
             username=User.objects.get(username=str(request.user))
         ).delete()
         d = d.copy()
-        for i in range(1, 4):
-            Interest.objects.create(
+        intr = Interest.objects.create(
                 username=User.objects.get(username=str(request.user)),
-                interest1=d[f"interest_{i}"],
-                bio=d[f"interest_{i}_bio"],
-                link=d[f"interest_{i}_link"],
+                interest=d[f"interest"],
+                bio=d[f"bio"],
+                link=d[f"link"],
             )
+        intr.save()
 
         messages.success(request, "Successfully updated profile info!")
         return redirect("main:profile")
@@ -151,17 +151,13 @@ def profile_request(request):
     prefill_dict = model_to_dict(
         Profile.objects.get(username=User.objects.get(username=str(request.user)))
     )
-    inter = Interest.objects.filter(
-        username=User.objects.get(username=str(request.user))
-    )
+    intr = Interest.objects.filter(username=User.objects.get(username=str(request.user)))[0]
+    prefill_dict["interest"] = intr.interest
+    prefill_dict["link"] = intr.link
+    prefill_dict["bio"] = intr.bio
 
-    for i, obj in zip(range(1, 4), inter):
-        k = "interest_" + str(i)
-        j = "interest_" + str(i) + "_bio"
-        l = "interest_" + str(i) + "_link"
-        prefill_dict[k] = obj.interest1
-        prefill_dict[j] = obj.bio
-        prefill_dict[l] = obj.link
+
+
 
     profile_form = ProfileForm(initial=prefill_dict)
     dp_url = prefill_dict["display_picture"].url
@@ -307,17 +303,12 @@ def view_profile(request, profile_id):
     d['display_picture'] = profile_obj.display_picture.url
 
 
-    inter = Interest.objects.filter(
+    intr = Interest.objects.filter(
         username=User.objects.get(username=User.objects.filter(id=profile_id)[0])
-    )
-
-    for i, obj in zip(range(1, 4), inter):
-        k = "interest_" + str(i)
-        j = "interest_" + str(i) + "_bio"
-        l = "interest_" + str(i) + "_link"
-        d[k] = obj.interest1
-        d[j] = obj.bio
-        d[l] = obj.link
+    )[0]
+    d["interest"] = intr.interest
+    d["link"] = intr.link
+    d["bio"] = intr.bio
 
     
     return render(request=request,
