@@ -36,12 +36,12 @@
         <table>
             {% for profile in table%}
             <tr>
-                <td> <h5>
-                {{profile.first_name}} {{profile.last_name}} 
-                </h5>
-                </td>
                 <td>
-                    <img  src= '{{ profile.display_picture }}' style="float:left;width:100;height:100px;padding:20px 20px 20px 20px; z-index: 7;" alt="Display Picture"><br>
+                    <img  src= '{{ profile.display_picture }}' style="float:left;width:150px;height:150px;padding:20px 20px 20px 20px; z-index: 7;" alt="Display Picture"><br>
+                </td>
+                <td> <h6>
+                {{profile.first_name}} {{profile.last_name}} 
+                </h6>
                 </td>
             </tr>
         {% comment %} {% load django_tables2 %} 
