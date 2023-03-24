@@ -303,17 +303,14 @@ def view_profile(request, profile_id):
     d['display_picture'] = profile_obj.display_picture.url
 
 
-    inter = Interest.objects.filter(
+    intr = Interest.objects.filter(
         username=User.objects.get(username=User.objects.filter(id=profile_id)[0])
-    )
+    )[0]
+    d["interest"] = intr.interest
+    d["link"] = intr.link
+    d["bio"] = intr.bio
 
-    for i, obj in zip(range(1, 4), inter):
-        k = "interest_" + str(i)
-        j = "interest_" + str(i) + "_bio"
-        l = "interest_" + str(i) + "_link"
-        d[k] = obj.interest1
-        d[j] = obj.bio
-        d[l] = obj.link
+
 
     
     return render(request=request,
