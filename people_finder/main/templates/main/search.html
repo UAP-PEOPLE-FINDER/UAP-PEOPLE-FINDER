@@ -43,9 +43,9 @@
                 {{profile.first_name}} {{profile.last_name}} 
                 </h6>
                 </td>
-                <td>
-                    <a href="">
-                    <button type="Submit" class="btn btn-outline-primary"> view profile</button>
+                <td style='padding:10%'>
+                    <a href="{% url 'main:view_profile' profile.username_id%}">
+                    <button type="Submit" class="btn btn-outline-primary"> View Profile</button>
                     </a>
                 </td>
             </tr>
