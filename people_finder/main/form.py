@@ -29,27 +29,12 @@ class NewUserForm(UserCreationForm):
 
 
 class ProfileForm(forms.Form):
-    first_name = forms.CharField(max_length=30, required=False)
-    last_name = forms.CharField(max_length=30, required=False)
+    first_name = forms.CharField(max_length=30, required=True)
+    last_name = forms.CharField(max_length=30, required=True)
     display_picture = forms.ImageField()
-    interest_1 = forms.ModelChoiceField(
-        queryset=ListofInterests.objects.all(), required=False
-    )
-    interest_1_bio = forms.CharField(max_length=140, required=False)
-    interest_1_link = forms.CharField(max_length=100, required=False)
-
-    interest_2 = forms.ModelChoiceField(
-        queryset=ListofInterests.objects.all(), required=False
-    )
-    interest_2_bio = forms.CharField(max_length=140, required=False)
-    interest_2_link = forms.CharField(max_length=100, required=False)
-
-    interest_3 = forms.ModelChoiceField(
-        queryset=ListofInterests.objects.all(), required=False
-    )
-    interest_3_bio = forms.CharField(max_length=140, required=False)
-    interest_3_link = forms.CharField(max_length=100, required=False)
-
+    interest = forms.CharField(max_length=200, required=True)
+    bio = forms.CharField(max_length=140, required=True)
+    link = forms.CharField(max_length=100, required=False)
     # interest1 = forms.
 
 
