@@ -302,6 +302,20 @@ def view_profile(request, profile_id):
     d['first_name'] = profile_obj.first_name
     d['last_name'] = profile_obj.last_name
     d['display_picture'] = profile_obj.display_picture
+
+
+    inter = Interest.objects.filter(
+        username=User.objects.get(username=User.objects.filter(id=profile_id)[0])
+    )
+
+    for i, obj in zip(range(1, 4), inter):
+        k = "interest_" + str(i)
+        j = "interest_" + str(i) + "_bio"
+        l = "interest_" + str(i) + "_link"
+        d[k] = obj.interest1
+        d[j] = obj.bio
+        d[l] = obj.link
+
     return render(request=request,
                     template_name="main/view_profile.html",
                     context={"profile":d},)
