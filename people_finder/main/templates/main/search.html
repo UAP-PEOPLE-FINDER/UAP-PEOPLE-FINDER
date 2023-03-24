@@ -33,8 +33,12 @@
         <br>
         <br>
         {% if table %}
-        {% load django_tables2 %} 
-        {% render_table table %}
+            {% for profile in table%}
+                {{profile.first_name}} {{profile.last_name}} 
+                    <img  src= '{{ profile.display_picture }}' style="float:left;width:100;height:100px;padding:20px 20px 20px 20px; z-index: 7;" alt="Display Picture"><br>
+        {% comment %} {% load django_tables2 %} 
+        {% render_table table %} {% endcomment %}
+            {% endfor %}
         {% endif %}
     </div>
 

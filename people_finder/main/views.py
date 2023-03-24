@@ -30,8 +30,8 @@ from pathlib import Path
 def check_valid(request, dic):
     dic = dic.copy()
     dic["email"] = str(dic["email"]).lower()
-    # if re.fullmatch("[0-9]{8}@uap-bd.edu", dic["email"]):
-    return True
+    if re.fullmatch(".*@uap-bd.edu", dic["email"]):
+        return True
     messages.error(
         request,
         mark_safe("Only the users from UAP are allowed. Use your UAP provided e-mail."),
@@ -277,7 +277,8 @@ def search_request(request):
                 except Exception as msg:
                     print(msg)
 
-            table = SearchTable(tempObj)
+            # table = SearchTable(tempObj)
+            table = tempObj
 
             return render(
                 request=request,
@@ -301,6 +302,7 @@ def view_profile(request, profile_id):
     d = dict()
     d['first_name'] = profile_obj.first_name
     d['last_name'] = profile_obj.last_name
+<<<<<<< Updated upstream
     d['display_picture'] = profile_obj.display_picture
 
 
@@ -316,6 +318,9 @@ def view_profile(request, profile_id):
         d[j] = obj.bio
         d[l] = obj.link
 
+=======
+    d['display_picture'] = profile_obj.display_picture.url
+>>>>>>> Stashed changes
     return render(request=request,
                     template_name="main/view_profile.html",
                     context={"profile":d},)
