@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django-crispy-forms = "*"
+python-dotenv = "*"
+pillow = "*"
+django = "*"
+django-tables2 = "*"
+selenium = "*"
+crispy-bootstrap5 = "*"
+
+[dev-packages]
+autopep8 = "*"
+
+[requires]
+python_version = "*"
