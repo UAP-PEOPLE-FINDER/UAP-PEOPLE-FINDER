@@ -63,3 +63,11 @@ class ImageColumn(tables.Column):
             '<img src="%s" alt="Display Picture" style="float:right;width:100px;height:100px;padding:20px 20px 20px 20px; z-index: 7;" />'
             % value
         )
+
+
+class SearchTable(tables.Table):
+    class Meta:
+        model = Profile
+        template_name = "django_tables2/bootstrap-responsive.html"
+
+    display_picture = ImageColumn()
