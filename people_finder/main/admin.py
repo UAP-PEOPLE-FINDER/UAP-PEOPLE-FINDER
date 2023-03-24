@@ -7,3 +7,6 @@ def get_model_fields(model):
 
 class ListofInterestsAdmin(admin.ModelAdmin):
     fields = ["interest"]
+
+class ProfileAdmin(admin.ModelAdmin):
+    fields = get_model_fields(Profile)
