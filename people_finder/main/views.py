@@ -290,3 +290,18 @@ def search_request(request):
         template_name="main/search.html",
         context={"search_form": search_form},
     )
+
+@login_required(login_url="main:login")
+def view_profile(request, profile_id):
+    if request.method == "POST":
+        #Adding add friend, send message button for future releases.
+        pass
+    #Creating View Profile Context
+    profile_obj = Profile.objects.filter(username=User.objects.filter(id=profile_id)[0])[0]
+    d = dict()
+    d['first_name'] = profile_obj.first_name
+    d['last_name'] = profile_obj.last_name
+    d['display_picture'] = profile_obj.display_picture
+    return render(request=request,
+                    template_name="main/view_profile.html",
+                    context={"profile":d},)

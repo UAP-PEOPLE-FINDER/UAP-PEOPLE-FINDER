@@ -18,7 +18,8 @@ urlpatterns = [
         views.password_reset_profile_request,
         name="password_reset_profile",
     ),
-    path("search", views.search_request, name="search"),     
+    path("search", views.search_request, name="search"), 
+    path("view_profile/<int:profile_id>", views.view_profile, name="view_profile"),    
 
 ]
 if settings.DEBUG:  # new
