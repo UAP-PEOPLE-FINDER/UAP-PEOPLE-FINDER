@@ -48,3 +48,7 @@ class ProfileForm(forms.Form):
     interest_3_link = forms.CharField(max_length=100, required=False)
 
     # interest1 = forms.
+
+
+class SearchForm(forms.Form):
+    search_text = forms.CharField(max_length=30, required=False)
