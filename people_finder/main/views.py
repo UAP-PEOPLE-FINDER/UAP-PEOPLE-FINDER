@@ -310,8 +310,6 @@ def view_profile(request, profile_id):
     d["link"] = intr.link
     d["bio"] = intr.bio
 
-
-
     
     return render(request=request,
                     template_name="main/view_profile.html",
