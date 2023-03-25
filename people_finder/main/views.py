@@ -26,7 +26,7 @@ from django.utils.encoding import force_bytes
 import os
 from pathlib import Path
 from django.views.decorators.cache import never_cache
-
+from django.core.exceptions import ObjectDoesNotExist
 
 def check_valid(request, dic):
     dic = dic.copy()
@@ -297,24 +297,41 @@ def view_profile(request, profile_id):
     prof_user = User.objects.get(id=profile_id)
     curr_user = request.user
     if request.method == "POST":
+        f1 = Friend.objects.filter(incoming=prof_user, outgoing=curr_user)
+        f1 = f1[0] if f1 else None
+        f2 = Friend.objects.filter(incoming=curr_user, outgoing=prof_user)
+        f2 = f2[0] if f2 else None
         #Adding add friend, send message button for future releases.
         # inc_user_id = request.path_info.split("/")[-1]
         if "send_req" in request.POST:
-            Friend.objects.get_or_create(incoming=prof_user, outgoing=curr_user)
+            if not (f2 or f1):
+                Friend.objects.create(incoming=prof_user, outgoing=curr_user)
+            else:
+                messages.error(
+                    request, mark_safe("You already have a incoming friend request!")
+                )
         elif "cancel_req" in request.POST:
-            Friend.objects.get(incoming=prof_user, outgoing=curr_user).delete()
+            if f1:
+                if not f1.isFriend:
+                    f1.delete()
+            if f2:
+                if not f2.isFriend:
+                    f2.delete()
         elif "accept_req" in request.POST:
-            obj = Friend.objects.get(incoming=curr_user, outgoing=prof_user)
-            obj.isFriend = True
-            obj.save()
+            try: 
+                obj = Friend.objects.get(incoming=curr_user, outgoing=prof_user)
+                obj.isFriend = True
+                obj.save()
+            except ObjectDoesNotExist:
+                pass
         elif "reject_req" in request.POST:
-            Friend.objects.get(incoming=curr_user, outgoing=prof_user).delete()
+            if f1:
+                if not f1.isFriend:
+                    f1.delete()
+            if f2:
+                if not f2.isFriend:
+                    f2.delete()
         elif "unfriend" in request.POST:
-            f1 = Friend.objects.filter(incoming=prof_user, outgoing=curr_user)
-            f1 = f1[0] if f1 else None
-            f2 = Friend.objects.filter(incoming=curr_user, outgoing=prof_user)
-            f2 = f2[0] if f2 else None
-            #for future work
             if f1:
                 f1.delete()
             if f2:
