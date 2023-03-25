@@ -11,6 +11,7 @@
     <body>
 
     {% include 'main/navbar.html' %}
+    {% include 'main/messages.html' %}
     <!--Signup form-->
     <!-- {% comment %} {% extends "main/header.html" %} {% endcomment %} -->
 
@@ -21,14 +22,28 @@
     <!--Register--> 
     <div class="container py-5">
         <img  src= '{{ profile.display_picture }}' alt="Display Picture" style="float:left;width:150px;height:150px;padding:20px 20px 20px 20px; z-index: 7;">
-        {% include 'main/messages.html' %}
-        <h2 style="padding-top:5%">{{profile.first_name}} {{profile.last_name}}</h2>
-        <h3 style="padding-top:5%">Interest: {{profile.interest}}</h3>
-        <h3 style="padding-top:5%">Bio: {{profile.bio}}</h3>
-        <h3 style="padding-top:5%">Link: <a href={{profile.link}}>{{profile.link}}</a></h3>
-        </form>
+        <h2 style="padding-top:3%">{{profile.first_name}} {{profile.last_name}}</h2>
+        {% if profile.self_profile %}
+        <br>
+        {% else %}
+        <form method="POST">
+          {% csrf_token %}
+          {% if profile.isFriend %}
+            <button name = "unfriend" type="Submit" class="btn btn-outline-primary"> Unfriend </button>
+            <button name = "send_message" type="Submit" class="btn btn-outline-primary"> Send Message</button>
+          {% elif profile.sentRequest %}
+            <button name= "cancel_req" type="Submit" class="btn btn-outline-primary"> Cancel Friend Request </button>
+          {% else %}
+            <button name ="send_req" type="Submit" class="btn btn-outline-primary"> Send Friend Request </button>
+          {% endif %}
+          </form>
+        {% endif%}
+        <h6 style="padding-top:5%">Interest: {{profile.interest}}</h3>
+        <h6 style="padding-top:5%">Bio: {{profile.bio}}</h3>
+        <h6 style="padding-top:5%">Link: <a href={{profile.link}}>{{profile.link}}</a></h3>
         {% comment %} <p class="text-right">If you already have an account, <a href="login">login</a> instead.</p> {% endcomment %}
     </div>
+    
 
     {% endblock %}
 

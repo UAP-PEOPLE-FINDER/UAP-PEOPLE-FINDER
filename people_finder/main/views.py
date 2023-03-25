@@ -11,7 +11,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
-from main.models import Profile, ListofInterests, Interest
+from main.models import Profile, ListofInterests, Interest, Friend
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm
 from django.core.mail import send_mail, BadHeaderError
@@ -294,7 +294,12 @@ def search_request(request):
 def view_profile(request, profile_id):
     if request.method == "POST":
         #Adding add friend, send message button for future releases.
-        pass
+        if "send_req" in request.POST:
+            inc_user_id = request.path_info.split("/")[-1]
+            inc_user = User.objects.get(id=inc_user_id)
+            out_user = request.user
+            Friend.objects.get_or_create(incoming=inc_user, outgoing=out_user)
+
     #Creating View Profile Context
     profile_obj = Profile.objects.filter(username=User.objects.filter(id=profile_id)[0])[0]
     d = dict()
@@ -309,6 +314,7 @@ def view_profile(request, profile_id):
     d["interest"] = intr.interest
     d["link"] = intr.link
     d["bio"] = intr.bio
+    d['self_profile'] = True if profile_obj.username == request.user else False
 
     
     return render(request=request,

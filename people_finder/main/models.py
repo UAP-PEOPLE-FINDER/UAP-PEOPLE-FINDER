@@ -27,3 +27,10 @@ class Interest(models.Model):
     interest = models.CharField(max_length=200, blank=True)
     link = models.CharField(max_length=100, blank=True)
     bio = models.CharField(max_length=140, blank=True)
+
+
+class Friend(models.Model):
+    incoming = models.OneToOneField(User, related_name="incoming", on_delete=models.CASCADE)
+    outgoing = models.OneToOneField(User, related_name="outgoing", on_delete=models.CASCADE)
+    isFriend = models.BooleanField(default=False)
+    
