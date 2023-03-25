@@ -25,6 +25,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 import os
 from pathlib import Path
+from django.views.decorators.cache import never_cache
 
 
 def check_valid(request, dic):
@@ -290,24 +291,59 @@ def search_request(request):
         context={"search_form": search_form},
     )
 
+@never_cache
 @login_required(login_url="main:login")
 def view_profile(request, profile_id):
+    prof_user = User.objects.get(id=profile_id)
+    curr_user = request.user
     if request.method == "POST":
         #Adding add friend, send message button for future releases.
+        # inc_user_id = request.path_info.split("/")[-1]
         if "send_req" in request.POST:
-            inc_user_id = request.path_info.split("/")[-1]
-            inc_user = User.objects.get(id=inc_user_id)
-            out_user = request.user
-            Friend.objects.get_or_create(incoming=inc_user, outgoing=out_user)
+            Friend.objects.get_or_create(incoming=prof_user, outgoing=curr_user)
+        elif "cancel_req" in request.POST:
+            Friend.objects.get(incoming=prof_user, outgoing=curr_user).delete()
+        elif "accept_req" in request.POST:
+            obj = Friend.objects.get(incoming=curr_user, outgoing=prof_user)
+            obj.isFriend = True
+            obj.save()
+        elif "reject_req" in request.POST:
+            Friend.objects.get(incoming=curr_user, outgoing=prof_user).delete()
+        elif "unfriend" in request.POST:
+            f1 = Friend.objects.filter(incoming=prof_user, outgoing=curr_user)
+            f1 = f1[0] if f1 else None
+            f2 = Friend.objects.filter(incoming=curr_user, outgoing=prof_user)
+            f2 = f2[0] if f2 else None
+            #for future work
+            if f1:
+                f1.delete()
+            if f2:
+                f2.delete()
+        return redirect(request.path_info)
+        
+    
+    isfriend = False
+    sentRequestByMe = False
+    sentRequestByThem = False
+    f1 = Friend.objects.filter(incoming=prof_user, outgoing=curr_user)
+    f1 = f1[0] if f1 else None
+    f2 = Friend.objects.filter(incoming=curr_user, outgoing=prof_user)
+    f2 = f2[0] if f2 else None
+    if f1:
+        if f1.isFriend:
+            isfriend = True
+        sentRequestByMe = True
+    elif f2:
+        if f2.isFriend:
+            isfriend = True
+        sentRequestByThem = True
 
     #Creating View Profile Context
-    profile_obj = Profile.objects.filter(username=User.objects.filter(id=profile_id)[0])[0]
+    profile_obj = Profile.objects.get(username=prof_user)
     d = dict()
     d['first_name'] = profile_obj.first_name
     d['last_name'] = profile_obj.last_name
     d['display_picture'] = profile_obj.display_picture.url
-
-
     intr = Interest.objects.filter(
         username=User.objects.get(username=User.objects.filter(id=profile_id)[0])
     )[0]
@@ -316,6 +352,9 @@ def view_profile(request, profile_id):
     d["bio"] = intr.bio
     d['self_profile'] = True if profile_obj.username == request.user else False
 
+    d['isFriend'] = isfriend
+    d['sentRequestByMe'] = sentRequestByMe
+    d['sentRequestByThem'] = sentRequestByThem
     
     return render(request=request,
                     template_name="main/view_profile.html",

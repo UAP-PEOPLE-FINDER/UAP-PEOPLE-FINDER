@@ -30,7 +30,7 @@ class Interest(models.Model):
 
 
 class Friend(models.Model):
-    incoming = models.OneToOneField(User, related_name="incoming", on_delete=models.CASCADE)
-    outgoing = models.OneToOneField(User, related_name="outgoing", on_delete=models.CASCADE)
+    incoming = models.ForeignKey(User, related_name="incoming", on_delete=models.CASCADE)
+    outgoing = models.ForeignKey(User, related_name="outgoing", on_delete=models.CASCADE)
     isFriend = models.BooleanField(default=False)
     

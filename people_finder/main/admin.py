@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ListofInterests, Profile, Interest
+from .models import ListofInterests, Profile, Interest, Friend
 
 # Register your models here
 def get_model_fields(model):
@@ -14,6 +14,10 @@ class ProfileAdmin(admin.ModelAdmin):
 class InterestAdmin(admin.ModelAdmin):
     fields = ["username", "interest1", "link", "bio"]
 
+class FriendAdmin(admin.ModelAdmin):
+    fields = get_model_fields(Friend).remove('id')
+
 admin.site.register(ListofInterests, ListofInterestsAdmin)
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Interest, InterestAdmin)
+admin.site.register(Friend, FriendAdmin)

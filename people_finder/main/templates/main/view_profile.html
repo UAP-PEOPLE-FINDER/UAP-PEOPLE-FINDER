@@ -31,8 +31,11 @@
           {% if profile.isFriend %}
             <button name = "unfriend" type="Submit" class="btn btn-outline-primary"> Unfriend </button>
             <button name = "send_message" type="Submit" class="btn btn-outline-primary"> Send Message</button>
-          {% elif profile.sentRequest %}
+          {% elif profile.sentRequestByMe %}
             <button name= "cancel_req" type="Submit" class="btn btn-outline-primary"> Cancel Friend Request </button>
+          {% elif profile.sentRequestByThem %}
+            <button name= "reject_req" type="Submit" class="btn btn-outline-primary"> Reject Friend Request </button>
+            <button name= "accept_req" type="Submit" class="btn btn-outline-primary"> Accept Friend Request </button>
           {% else %}
             <button name ="send_req" type="Submit" class="btn btn-outline-primary"> Send Friend Request </button>
           {% endif %}
