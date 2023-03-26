@@ -20,6 +20,7 @@ urlpatterns = [
     ),
     path("search", views.search_request, name="search"),
     path("friends", views.friends, name="friends"),  
+    path("received_requests", views.received_requests, name="received_requests"),
     path("view_profile/<int:profile_id>", views.view_profile, name="view_profile"),    
 
 ]
