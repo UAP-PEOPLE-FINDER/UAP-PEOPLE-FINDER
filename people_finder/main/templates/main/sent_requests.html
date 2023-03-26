@@ -21,14 +21,11 @@
     <!--Register--> 
     <div class="container py-5">
         {% include 'main/messages.html' %}
-        <h2 class="font-weight-bold mt-3">Friends</h2>
+        <h2 class="font-weight-bold mt-3"> Friend Requests Sent</h2>
 		<hr>
-        <br>            
+        <br>
             <a href="{% url 'main:received_requests' %}">
                 <button type="Submit" class="btn btn-outline-primary"> Received Friend Requests </button>
-            </a>
-            <a href="{% url 'main:sent_requests' %}">
-                <button name= "sent_req" type="Submit" class="btn btn-outline-primary"> Friend Requests Sent </button>
             </a>
         <br>
         <br>
@@ -53,7 +50,7 @@
         {% render_table table %} {% endcomment %}
             {% endfor %}
         {% else %}
-            <h2> You do not have any friends yet. </h2>
+            <h2> You do not have any sent requests. </h2>
         {% endif %}
         </table>
     </div>
