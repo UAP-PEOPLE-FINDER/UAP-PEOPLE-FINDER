@@ -294,8 +294,13 @@ def search_request(request):
 @never_cache
 @login_required(login_url="main:login")
 def view_profile(request, profile_id):
-    prof_user = User.objects.get(id=profile_id)
+    try:
+        prof_user = User.objects.get(id=profile_id)
+    except:
+        return redirect("main:profile")    
+    
     curr_user = request.user
+    
     if request.method == "POST":
         f1 = Friend.objects.filter(incoming=prof_user, outgoing=curr_user)
         f1 = f1[0] if f1 else None
