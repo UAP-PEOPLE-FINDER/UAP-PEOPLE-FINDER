@@ -10,14 +10,19 @@
           {% if user.is_authenticated %}
           
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'main:logout' %}">Logout</a>
+            <a class="nav-link" href="{% url 'main:friends' %}">Friends</a>
           </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'main:search' %}">Search</a>
+          </li>
+
           <li class="nav-item">
             <a class="nav-link" href="{% url 'main:profile' %}">Welcome, {{user.username}}</a>
           </li>
-  
+
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'main:search' %}">Search User</a>
+            <a class="nav-link" href="{% url 'main:logout' %}">Logout</a>
           </li>
     
           {% else %}

@@ -376,3 +376,22 @@ def view_profile(request, profile_id):
     return render(request=request,
                     template_name="main/view_profile.html",
                     context={"profile":d},)
+
+
+@login_required(login_url="main:login")
+def friends(request):
+    curr_user = request.user
+    f1 = Friend.objects.filter(outgoing=curr_user)
+    
+    friendSet = set()
+    for obj in f1:
+        if obj.isFriend:
+            try:
+                obj = Profile.objects.get(username=obj.incoming)
+                friendSet.add(obj)
+            except Exception as msg:
+                print(msg)
+
+    return render(request=request,
+                    template_name="main/friends.html",
+                    context={"table":friendSet},)
