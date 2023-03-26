@@ -270,8 +270,6 @@ def search_request(request):
             for user in searchValue:
                 try:
                     obj = Profile.objects.get(username=user)
-                    if obj.first_name=="":
-                        continue
                     tempObj.add(obj)
                 except Exception as msg:
                     print(msg)
