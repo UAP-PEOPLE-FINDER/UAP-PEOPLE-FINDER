@@ -182,7 +182,7 @@ def password_reset_request(request):
                     email_template_name = "main/password/password_reset_email.txt"
                     c = {
                         "email": user.email,
-                        "domain": "103.198.137.87:8000",
+                        "domain": "peoplefinder.lol",
                         "site_name": "UAP People finder",
                         "uid": urlsafe_base64_encode(force_bytes(user.pk)),
                         "user": user,
@@ -223,7 +223,7 @@ def password_reset_profile_request(request):
                     email_template_name = "main/password/password_reset_email.txt"
                     c = {
                         "email": user.email,
-                        "domain": "103.198.137.87:8000",
+                        "domain": "peoplefinder.lol",
                         "site_name": "UAP People finder",
                         "uid": urlsafe_base64_encode(force_bytes(user.pk)),
                         "user": user,
@@ -359,12 +359,17 @@ def view_profile(request, profile_id):
     d['first_name'] = profile_obj.first_name
     d['last_name'] = profile_obj.last_name
     d['display_picture'] = profile_obj.display_picture.url
-    intr = Interest.objects.filter(
-        username=User.objects.get(username=User.objects.filter(id=profile_id)[0])
-    )[0]
-    d["interest"] = intr.interest
-    d["link"] = intr.link
-    d["bio"] = intr.bio
+    intr = None
+    try: 
+        intr = Interest.objects.filter(
+            username=User.objects.get(username=User.objects.filter(id=profile_id)[0])
+        )[0]
+        d["interest"] = intr.interest
+        d["link"] = intr.link
+        d["bio"] = intr.bio
+    except:
+        pass
+    
     d['self_profile'] = True if profile_obj.username == request.user else False
 
     d['isFriend'] = isfriend
