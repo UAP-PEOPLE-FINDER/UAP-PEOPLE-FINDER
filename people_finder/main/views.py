@@ -379,13 +379,22 @@ def view_profile(request, profile_id):
 @login_required(login_url="main:login")
 def friends(request):
     curr_user = request.user
-    f1 = Friend.objects.filter(outgoing=curr_user)
-    
     friendSet = set()
+    
+    f1 = Friend.objects.filter(outgoing=curr_user)
     for obj in f1:
         if obj.isFriend:
             try:
                 obj = Profile.objects.get(username=obj.incoming)
+                friendSet.add(obj)
+            except Exception as msg:
+                print(msg)
+
+    f2 = Friend.objects.filter(incoming=curr_user)
+    for obj in f2:
+        if obj.isFriend:
+            try:
+                obj = Profile.objects.get(username=obj.outgoing)
                 friendSet.add(obj)
             except Exception as msg:
                 print(msg)
