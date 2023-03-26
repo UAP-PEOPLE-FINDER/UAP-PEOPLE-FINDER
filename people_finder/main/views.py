@@ -270,6 +270,8 @@ def search_request(request):
             for user in searchValue:
                 try:
                     obj = Profile.objects.get(username=user)
+                    if obj.first_name=="":
+                        continue
                     tempObj.add(obj)
                 except Exception as msg:
                     print(msg)
@@ -375,6 +377,7 @@ def view_profile(request, profile_id):
     d['isFriend'] = isfriend
     d['sentRequestByMe'] = sentRequestByMe
     d['sentRequestByThem'] = sentRequestByThem
+    d['email'] = prof_user
     
     return render(request=request,
                     template_name="main/view_profile.html",
