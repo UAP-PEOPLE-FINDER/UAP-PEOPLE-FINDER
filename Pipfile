@@ -11,6 +11,7 @@ django = "*"
 django-tables2 = "*"
 selenium = "*"
 crispy-bootstrap5 = "*"
+django-admin-soft-dashboard = "*"
 
 [dev-packages]
 autopep8 = "*"

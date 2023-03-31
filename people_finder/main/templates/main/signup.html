@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+{% extends 'layouts/base-fullscreen.html' %}
+{% load i18n static admin_soft %}
+
 <html>
   <head>
       <meta charset="utf-8">
@@ -16,23 +19,97 @@
 
     {% block content %} 
 
-    {% load crispy_forms_tags %}         
     
-    <!--Register--> 
-    <div class="container py-5">
-        {% include 'main/messages.html' %}
-        <h1>Signup</h1>
-        <form method="POST">
-            {% csrf_token %}
-            {{ register_form.email|as_crispy_field }}
-            {{ register_form.accept_terms|as_crispy_field }}
-            {% comment %} <button class="btn btn-primary" type="submit">Register</button> {% endcomment %}
-            <button type="Submit" class="btn btn-outline-primary">Sign up</button>
-        </form>
-        <p class="text-right">If you already have an account, <a href="login">login</a> instead.</p>
-    </div>
 
-    {% endblock %}
+  {% comment %} {% include 'includes/navigation-fullscreen.html' %} {% endcomment %}
+
+  <main class="main-content  mt-0">
+    <section>
+      <div class="page-header min-vh-75">
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
+              <div class="card card-plain mt-8">
+                <div class="card-header pb-0 text-left bg-transparent">
+                    {% load crispy_forms_tags %}         
+    
+                    <!--Register--> 
+                    <div class="container py-5">
+                        {% include 'main/messages.html' %}
+                        <h1>Signup</h1>
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ register_form.email|as_crispy_field }}
+                            {{ register_form.accept_terms|as_crispy_field }}
+                            {% comment %} <button class="btn btn-primary" type="submit">Register</button> {% endcomment %}
+                            {% comment %} <button type="Submit" class="btn btn-outline-primary">Sign up</button> {% endcomment %}
+                            <div class="text-center">
+                                <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Sign UP</button>
+                                <p class="mt-4">
+                                  Have an account? 
+                                  <a href="{% url 'main:login' %}" class="text-primary">Login</a>
+                                </p>
+                              </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    {% if success %} 
+                
+                        <p class="text-sm mt-3 mb-0 text-center"> 
+                        <div class="text-center">
+                            <a href="{% url 'main:login' %}" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign IN</a>
+                        </div> 
+                        </p>
+  
+                    {% else %}
+                        
+                        <form role="form" method="post" action="#">
+
+                            {% csrf_token %}
+                            {% for field in form %}
+                              <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                              <div class="mb-3">
+                                {{field}}
+                              </div>
+                              <span class="text-danger">{{ field.errors }}</span>
+                            {% endfor %}
+
+
+
+                        </form>
+
+                    {% endif %}
+                    
+                </div>
+
+                <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                  <p class="mb-4 text-sm mx-auto">
+                    {% url 'admin_password_reset' as password_reset_url %}
+                    {% if password_reset_url %}
+                    <a href="{{ password_reset_url }}" class="text-info text-gradient font-weight-bold">
+                        Forgotten your password or username?
+                    </a>
+                    {% endif %}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
+                <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('{% static 'img/curved-images/curved6.jpg' %}')"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  {% comment %} {% include 'includes/footer-fullscreen.html' %} {% endcomment %}
+
+{% endblock content %}
 
     </body>
 </html>

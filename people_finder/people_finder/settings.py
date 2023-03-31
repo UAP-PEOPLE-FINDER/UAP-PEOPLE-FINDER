@@ -56,6 +56,7 @@ ALLOWED_HOSTS = ['127.0.0.1', '103.198.137.87', 'peoplefinder.lol']
 
 INSTALLED_APPS = [
     'main.apps.MainConfig',
+    'admin_soft.apps.AdminSoftDashboardConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
