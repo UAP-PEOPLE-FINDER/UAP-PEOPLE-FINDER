@@ -31,7 +31,7 @@ from django.core.exceptions import ObjectDoesNotExist
 def check_valid(request, dic):
     dic = dic.copy()
     dic["email"] = str(dic["email"]).lower()
-    if re.fullmatch("[.]*@uap-bd.edu", dic["email"]):
+    if re.fullmatch(".*@uap-bd.edu", dic["email"]):
         return True
     messages.error(
         request,
