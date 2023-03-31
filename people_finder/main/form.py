@@ -29,12 +29,12 @@ class NewUserForm(UserCreationForm):
 
 
 class ProfileForm(forms.Form):
-    first_name = forms.CharField(widget=forms.Textarea(attrs={'style': 'height:40px;font-size:115%;'}), max_length=30, required=True)
-    last_name = forms.CharField(widget=forms.Textarea(attrs={'style': 'height:40px;font-size:115%;'}), max_length=30, required=True)
+    first_name = forms.CharField(widget=forms.Textarea(attrs={'style': 'resize: none;height:40px;font-size:115%;'}), max_length=30, required=True)
+    last_name = forms.CharField(widget=forms.Textarea(attrs={'style': 'resize: none;height:40px;font-size:115%;'}), max_length=30, required=True)
     display_picture = forms.ImageField(widget=forms.FileInput())
-    interest = forms.CharField(widget=forms.Textarea(attrs={'style': 'height:40px;font-size:115%;'}), max_length=200, required=True)
-    bio = forms.CharField(widget=forms.Textarea(attrs={'style': 'vertical-align: top;height:400px;font-size:115%;'}), max_length=140, required=True)
-    link = forms.CharField(widget=forms.Textarea(attrs={'style': 'height:40px;font-size:115%;'}), max_length=100, required=False)
+    interest = forms.CharField(widget=forms.Textarea(attrs={'style': 'resize: none;height:40px;font-size:115%;'}), max_length=200, required=True)
+    bio = forms.CharField(widget=forms.Textarea(attrs={'style': 'resize: none;vertical-align: top;height:120px;font-size:115%;'}), max_length=140, required=True)
+    link = forms.CharField(widget=forms.Textarea(attrs={'style': 'resize: none;height:40px;font-size:115%;'}), max_length=100, required=False)
 
 
 class SearchForm(forms.Form):
