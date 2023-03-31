@@ -1,39 +1,109 @@
 <!DOCTYPE html>
+{% extends 'main/app/base.html' %}
+{% load i18n static admin_soft %}
+{% load admin_urls %}
+
 <html>
   <head>
-      <!-- Required meta tags -->
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <!--Bootstrap CSS-->
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
       {% load static %}
-      <link rel="stylesheet" href="{% static 'main/theme.css' %}">
     </head>
     <body>
-        
-    {% include 'main/navbar.html' %}
-
+    
     <!--Signup form-->
     {% comment %} {% extends "main/header.html" %} {% endcomment %}
 
     {% block content %} 
 
-    {% load crispy_forms_tags %}         
+    
 
-    <!--Register--> 
-    <div class="container py-5">
-        {% include 'main/messages.html' %}
-        <h1>Login</h1>
-        <form method="POST">
-            {% csrf_token %}
-            {{ login_form|crispy }}
-            <button class="btn btn-primary" type="submit">Login</button>
-            <a style="padding-left: 10px" href="password_reset">Forgor password? 💀</a>
-        </form>
-        <p class="text-right">If you don't have an account, <a href="signup">signup</a> instead.</p>
-    </div>
+  {% comment %} {% include 'includes/navigation-fullscreen.html' %} {% endcomment %}
 
-    {% endblock %}
+  <main class="main-content  mt-0">
+    <section>
+      <div class="page-header min-vh-75">
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
+              <div class="card card-plain mt-8">
+                <div class="card-header pb-0 text-left bg-transparent">
+                    {% load crispy_forms_tags %}         
+    
+                    <!--Register--> 
+                    {% load crispy_forms_tags %}         
+
+                    <!--Register--> 
+                    <div class="container py-5">
+                        {% include 'main/messages.html' %}
+                        <h1>Login</h1>
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ login_form|crispy }}
+                            <button class="btn btn-primary" type="submit">Login</button>
+                            <a style="padding-left: 10px" href="password_reset">Forgor password? 💀</a>
+                        </form>
+                        <p class="text-right">If you don't have an account, <a href="signup">signup</a> instead.</p>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    {% if success %} 
+                
+                        <p class="text-sm mt-3 mb-0 text-center"> 
+                        <div class="text-center">
+                            <a href="{% url 'main:login' %}" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign IN</a>
+                        </div> 
+                        </p>
+  
+                    {% else %}
+                        
+                        <form role="form" method="post" action="#">
+
+                            {% csrf_token %}
+                            {% for field in form %}
+                              <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                              <div class="mb-3">
+                                {{field}}
+                              </div>
+                              <span class="text-danger">{{ field.errors }}</span>
+                            {% endfor %}
+
+
+
+                        </form>
+
+                    {% endif %}
+                    
+                </div>
+
+                <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                  <p class="mb-4 text-sm mx-auto">
+                    {% url 'admin_password_reset' as password_reset_url %}
+                    {% if password_reset_url %}
+                    <a href="{{ password_reset_url }}" class="text-info text-gradient font-weight-bold">
+                        Forgotten your password or username?
+                    </a>
+                    {% endif %}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
+                <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('{% static 'main/login_page_background.jpg' %}')"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  {% comment %} {% include 'includes/footer-fullscreen.html' %} {% endcomment %}
+
+{% endblock content %}
 
     </body>
 </html>
+
+
+

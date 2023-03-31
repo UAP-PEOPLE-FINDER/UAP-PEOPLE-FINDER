@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-{% extends 'layouts/base-fullscreen.html' %}
+{% extends 'main/app/base.html' %}
 {% load i18n static admin_soft %}
+{% load admin_urls %}
 
 <html>
   <head>
       {% load static %}
     </head>
     <body>
-    {% include 'includes/navigation-fullscreen.html' %}
-    {% include 'main/navbar.html' %}
+    
     <!--Signup form-->
     {% comment %} {% extends "main/header.html" %} {% endcomment %}
 
