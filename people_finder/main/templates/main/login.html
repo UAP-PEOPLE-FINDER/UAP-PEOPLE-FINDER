@@ -39,9 +39,9 @@
                             {% csrf_token %}
                             {{ login_form|crispy }}
                             <button class="btn btn-primary" type="submit">Login</button>
-                            <a style="padding-left: 10px" href="password_reset">Forgor password? 💀</a>
+                            <a class="text-primary" style="padding-left: 10px" href="password_reset">Forgor password? 💀</a>
                         </form>
-                        <p class="text-right">If you don't have an account, <a href="signup">signup</a> instead.</p>
+                        <p class="text-right">If you don't have an account, <a class="text-primary" href="signup">signup</a> instead.</p>
                     </div>
                 </div>
                 <div class="card-body">
