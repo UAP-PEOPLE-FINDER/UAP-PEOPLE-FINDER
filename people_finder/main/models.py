@@ -1,6 +1,7 @@
 from email.policy import default
 from django.db import models
 from django.contrib.auth.models import User
+from model_utils.models import TimeStampedModel
 
 
 # Create your models here.
@@ -34,3 +35,13 @@ class Friend(models.Model):
     outgoing = models.ForeignKey(User, related_name="outgoing", on_delete=models.CASCADE)
     isFriend = models.BooleanField(default=False)
     
+class ChatRoom(models.Model):
+    id = models.OneToOneField(Friend, on_delete=models.CASCADE, primary_key=True)
+
+
+class Message(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE, related_name='messages')
+    created = models.DateTimeField(auto_now_add=True)
+    text = models.TextField(max_length=1024) 
+
