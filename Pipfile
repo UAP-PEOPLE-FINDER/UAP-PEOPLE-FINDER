@@ -12,6 +12,7 @@ django-tables2 = "*"
 selenium = "*"
 crispy-bootstrap5 = "*"
 django-admin-soft-dashboard = "*"
+channels = {extras = ["daphne"], version = "*"}
 
 [dev-packages]
 autopep8 = "*"
