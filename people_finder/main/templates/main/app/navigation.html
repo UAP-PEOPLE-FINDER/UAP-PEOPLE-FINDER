@@ -12,20 +12,41 @@
             <span class="navbar-toggler-bar bar3"></span>
           </span>
       </button>
-      <div class="collapse navbar-collapse" id="navigation">
+      <div style="" class="collapse navbar-collapse" id="navigation">
         <ul class="navbar-nav mx-auto ms-xl-auto">
           
+         
+          {% if user.is_authenticated %}
+          
           <li class="nav-item">
-            <a style="font-family:Sen;" class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="{% url 'main:signup' %}">
+            <a style="font-family:Sen;font-size:125%" class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="{% url 'main:friends' %}">🐒 Friends</a>
+          </li>
+
+          <li class="nav-item">
+            <a style="font-family:Sen;font-size:125%" class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="{% url 'main:search' %}">🔎 Search</a>
+          </li>
+
+          <li class="nav-item">
+            <a style="font-family:Sen;font-size:125%" class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="{% url 'main:profile' %}">🪪 Profile</a>
+          </li>
+
+          <li class="nav-item">
+            <a style="font-family:Sen;font-size:125%" class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="{% url 'main:logout' %}">⏏ Logout</a>
+          </li>
+    
+          {% else %}
+          <li class="nav-item">
+            <a style="font-family:Sen;font-size:125%" class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="{% url 'main:signup' %}">
               📝 Signup
             </a>
           </li>
 
           <li class="nav-item">
-            <a style="font-family:Sen;" class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="{% url 'main:login' %}">
+            <a style="font-family:Sen;font-size:125%" class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="{% url 'main:login' %}">
               🚀 Login
             </a>
           </li>
+          {% endif %}
 
         </ul>
 
