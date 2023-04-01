@@ -195,6 +195,7 @@ def password_reset_request(request):
                         str(user.email).lower(),
                     ]
                     try:
+                        print(email)
                         send_mail(subject, email, email_from, recipient_list)
                     except BadHeaderError:
                         messages.error(request, "There was an issue sending the mail.")
