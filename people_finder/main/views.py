@@ -11,7 +11,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
-from main.models import Profile, ListofInterests, Interest, Friend
+from main.models import Profile, ListofInterests, Interest, Friend, ChatRoom, Message
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm
 from django.core.mail import send_mail, BadHeaderError
@@ -27,6 +27,8 @@ import os
 from pathlib import Path
 from django.views.decorators.cache import never_cache
 from django.core.exceptions import ObjectDoesNotExist
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 def check_valid(request, dic):
     dic = dic.copy()
@@ -342,6 +344,9 @@ def view_profile(request, profile_id):
                 f1.delete()
             if f2:
                 f2.delete()
+        elif "send_message" in request.POST:
+            return message_send(request, profile_id)
+
         return redirect(request.path_info)
         
     
@@ -454,3 +459,37 @@ def sent_requests(request):
     return render(request=request,
                     template_name="main/sent_requests.html",
                     context={"table":friendSet},)
+
+def message_send(request, profile_id):
+    try:
+        prof_user = User.objects.get(id=profile_id)
+    except:
+        return redirect("main:profile")    
+    curr_user = request.user
+
+    f1 = Friend.objects.filter(incoming=prof_user, outgoing=curr_user)
+    f1 = f1[0] if f1 else None
+    f2 = Friend.objects.filter(incoming=curr_user, outgoing=prof_user)
+    f2 = f2[0] if f2 else None
+
+    room_name = None
+    if f1:
+        room_name = f1
+    if f2:
+        room_name = f2
+    
+    if room_name:
+        ChatRoom.objects.get_or_create(id=room_name)
+
+    return redirect('main:room', room_name=str(room_name.id))
+    
+
+@never_cache
+@login_required(login_url="main:login")
+def room(request, room_name, no_of_message=10):
+    # room_name will be the id of our friends relation.
+    messages = Message.objects.filter(room=ChatRoom.objects.get(id=room_name))[0:no_of_message]
+    return render(request, "main/room.html", {"user": str(request.user), 
+                                              "room_name": room_name, 
+                                              "prev_messages":messages, 
+                                              "no_of_message": no_of_message})
