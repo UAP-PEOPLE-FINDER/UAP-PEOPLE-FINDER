@@ -22,7 +22,8 @@ urlpatterns = [
     path("friends", views.friends, name="friends"),  
     path("received_requests", views.received_requests, name="received_requests"),
     path("sent_requests", views.sent_requests, name="sent_requests"),
-    path("view_profile/<int:profile_id>", views.view_profile, name="view_profile"),    
+    path("view_profile/<int:profile_id>", views.view_profile, name="view_profile"),
+    path("room/<str:room_name>/", views.room, name="room"), 
 
 ]
 if settings.DEBUG:  # new
