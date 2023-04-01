@@ -488,8 +488,20 @@ def message_send(request, profile_id):
 @login_required(login_url="main:login")
 def room(request, room_name, no_of_message=10):
     # room_name will be the id of our friends relation.
-    messages = Message.objects.filter(room=ChatRoom.objects.get(id=room_name))[0:no_of_message]
+    messages = Message.objects.order_by('-created').filter(room=ChatRoom.objects.get(id=room_name))[0:no_of_message:-1]
+    users = set()
+    user_profile = dict()
+    for m in Message.objects.filter(room=ChatRoom.objects.get(id=room_name)):
+        try:
+            u = Profile.objects.get(username=User.objects.get(username=str(m.user)))
+            users.add(u)
+        except:
+            pass
+    for u in users:
+        user_profile[str(u.username)] = {'dp':u.display_picture.url, 'first_name':u.first_name, 'last_name':u.last_name}
+
     return render(request, "main/room.html", {"user": str(request.user), 
                                               "room_name": room_name, 
                                               "prev_messages":messages, 
-                                              "no_of_message": no_of_message})
+                                              "no_of_message": no_of_message,
+                                              "users":user_profile})
