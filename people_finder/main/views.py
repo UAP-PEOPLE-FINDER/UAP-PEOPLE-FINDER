@@ -69,7 +69,13 @@ def signup_request(request):
             if form.is_valid():
                 confirm_email(d["email"], password)
                 user = form.save()
-                Profile.objects.create(username=user, first_name="", last_name="")
+                Profile.objects.create(username=user, first_name="", last_name="").save()
+                Interest.objects.create(
+                username=user,
+                interest="",
+                bio="",
+                link="",
+            ).save()
                 messages.success(
                     request, "An e-mail was sent to you with the credentials!"
                 )
@@ -77,7 +83,7 @@ def signup_request(request):
                 messages.error(
                     request, mark_safe("An account already exist with this e-mail.")
                 )
-        return redirect("main:signup")
+        return redirect("main:login")
     form = NewUserForm()
     return render(
         request=request,
