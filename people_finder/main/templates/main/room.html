@@ -93,7 +93,7 @@
                                     dv.innerHTML += '<tr>' 
                                     
                                     dv.innerHTML += `<td colspan='2' style=''> <img class='avatar avatar-sm me-2' src= '${data.dp}' title='${data.first_name} ${data.last_name}' style='float:left;width:50px;height:50px;padding:1% 1% 1% 1%;'> </td>`
-                                    if ({{other_user.username.username}} == data.user){
+                                    if ("{{other_user.username.username}}" == data.user){
                                         dv.innerHTML += `<div class="d-flex flex-column justify-content-center"><span style="background: rgb(119,214,244);background: linear-gradient(90deg, rgba(119,214,244,0.47941183309261204) 0%, rgba(168,212,236,1) 0%, rgba(160,231,246,1) 100%); ; font-family:Sen;font-size:105%;border-radius:10px;padding:1% 1% 1% 1%;border-style:solid;border-color:#f1c40f;border-width: 0.1px"> ${data.message} </span> </div>`;
                                     }
                                     else{
