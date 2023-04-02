@@ -13,6 +13,9 @@ selenium = "*"
 crispy-bootstrap5 = "*"
 django-admin-soft-dashboard = "*"
 channels = {extras = ["daphne"], version = "*"}
+"backports.weakref" = "*"
+cffi = "*"
+django-model-utils = "*"
 
 [dev-packages]
 autopep8 = "*"
