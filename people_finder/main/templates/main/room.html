@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 {% extends 'main/app/base.html' %}
+{% load i18n static admin_soft %}
+{% load admin_urls %}
 
 
 <html>
@@ -20,15 +22,20 @@
   <main style="font-family:Sen;" class="main-content  mt-0">
     <section>
       <div class="page-header min-vh-75">
-        <div class="container">
+        <div class="container-fluid">
           <div class="row">
-            <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
+            <div class="col-xl-5 col-lg-5 col-md-6 d-flex flex-column mx-auto">
               <div class="card card-plain mt-8">
                 <div class="card-header pb-0 text-left bg-transparent">
 
                     <div class="container py-5">
                         {% include 'main/messages.html' %}
-                        <h1>Signup</h1>
+                        {%for k, v in users.items%}
+                            {% if user.username|upper != k|upper %}
+                                <h1>{{k}}</h1>
+                            {% endif %}
+                        {%endfor%}
+                        
                         <div>
                             
                             <table id ="chat-log"> </table>
@@ -42,8 +49,8 @@
                                         <script>
                                             d = document.createElement('tr');
                                             
-                                            d.innerHTML += "<td colspan='2' style=''> <img  src= '{{v.dp}}' alt='Display Picture' style='float:left;width:50px;height:50px;padding:1% 1% 1% 1%;'> </td>"
-                                            d.innerHTML += '<td> {{m.user}}: {{m.text}} </td>';
+                                            d.innerHTML += "<td colspan='2' style=''> <img  src= '{{v.dp}}' alt='{{v.first_name}} {{v.last_name}}' style='float:left;width:50px;height:50px;padding:1% 1% 1% 1%;'> </td>"
+                                            d.innerHTML += '<td> : {{m.text}} </td>';
                                                     
                         
                                             document.querySelector('#chat-log').appendChild(d)
