@@ -21,19 +21,19 @@
 
   {% comment %} {% include 'includes/navigation-fullscreen.html' %} {% endcomment %}
 
-  <main style="font-family:Sen;" class="main-content  mt-0">
+  <main style="font-family:Sen;" class="main-content mt-0">
     <audio id='notification'>
         <source src="{% static 'main/notification.mp3' %}" type="audio/ogg">
       </audio> 
     <section>
       <div class="page-header min-vh-75">
-        <div class="container-fluid">
+        <div class="container-fluid py-8">
           <div class="row">
-            <div class="col-xl-5 col-lg-5 col-md-6 d-flex flex-column mx-auto">
+            <div class="col-xl-4 col-lg-6 col-md-6 d-flex flex-column mx-auto">
               <div class="card mt-4">
                 <div class="card-header pb-0 text-left bg-transparent">
 
-                    <div class="container py-5">
+                    <div class="container py-4">
                         {% include 'main/messages.html' %}
                         <div class="d-flex flex-column justify-content-center">
                             <img class='avatar avatar-l me-2' src= '{{other_user.display_picture.url}}' title='{{other_user.first_name}} {{other_user.last_name}}' style='float:left;width:100px;height:100px;padding:1% 1% 1% 1%;'>
@@ -140,47 +140,7 @@
                                                 
                     </div>
                 </div>
-                <div class="card-body">
 
-                    {% if success %} 
-                
-                        <p class="text-sm mt-3 mb-0 text-center"> 
-                        <div class="text-center">
-                            <a href="{% url 'main:login' %}" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign IN</a>
-                        </div> 
-                        </p>
-  
-                    {% else %}
-                        
-                        <form role="form" method="post" action="#">
-
-                            {% csrf_token %}
-                            {% for field in form %}
-                              <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                              <div class="mb-3">
-                                {{field}}
-                              </div>
-                              <span class="text-danger">{{ field.errors }}</span>
-                            {% endfor %}
-
-
-
-                        </form>
-
-                    {% endif %}
-                    
-                </div>
-
-                <div class="card-footer text-center pt-0 px-lg-2 px-1">
-                  <p class="mb-4 text-sm mx-auto">
-                    {% url 'admin_password_reset' as password_reset_url %}
-                    {% if password_reset_url %}
-                    <a href="{{ password_reset_url }}" class="text-info text-gradient font-weight-bold">
-                        Forgotten your password or username?
-                    </a>
-                    {% endif %}
-                  </p>
-                </div>
               </div>
             </div>
             <div class="col-md-6">
