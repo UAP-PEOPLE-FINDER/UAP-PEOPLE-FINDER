@@ -42,5 +42,9 @@ class ChatConsumer(WebsocketConsumer):
     def chat_message(self, event):
         message = event["message"]
         user = event["user"]
+        prof_obj = Profile.objects.get(username=User.objects.get(username=str(user)))
+        dp = prof_obj.display_picture.url
+        first_name = prof_obj.first_name
+        last_name = prof_obj.first_name
         # Send message to WebSocket
-        self.send(text_data=json.dumps({"message": message, 'user':user}))
+        self.send(text_data=json.dumps({"message": message, 'user':user, 'dp':dp, 'first_name':first_name, 'last_name':last_name}))
