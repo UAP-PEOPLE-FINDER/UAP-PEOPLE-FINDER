@@ -32,7 +32,11 @@
 
                     <div class="container py-5">
                         {% include 'main/messages.html' %}
-                        <h1> {{other_user.first_name}} </h1>
+                        <div class="d-flex flex-column justify-content-center">
+                            <img class='avatar avatar-sm me-2' src= '{{other_user.display_picture.url}}' title='{{other_user.first_name}} {{other_user.last_name}}' style='float:left;width:50px;height:50px;padding:1% 1% 1% 1%;'>
+                            <h1> {{other_user.first_name}} </h1>
+                        </div>
+
                         
                         <div id ='chat-window' style="height:500px; overflow:auto;" class="card-body p-3">
                             
