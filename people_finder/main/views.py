@@ -93,6 +93,9 @@ def signup_request(request):
 
 
 def login_request(request):
+    if request.user.is_authenticated:
+        return redirect("main:profile")
+
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
