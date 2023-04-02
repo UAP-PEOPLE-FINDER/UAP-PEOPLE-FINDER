@@ -1,76 +1,161 @@
-<!-- chat/templates/chat/room.html -->
 <!DOCTYPE html>
+{% extends 'main/app/base.html' %}
+
+
 <html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Chat Room</title>
-</head>
-<body>
-    {% load static %}
-    <table id ="chat-log"> </table>
-    <input id="chat-message-input" type="text" size="100"><br>
-    <input id="chat-message-submit" type="button" value="Send">
-    {{ room_name|json_script:"room-name" }}
-   
-    {% for m in prev_messages%}
-        {%for k, v in users.items%}
-            {% if k|upper == m.user|upper %}
-                <script>
-                    d = document.createElement('tr');
-                    
-                    d.innerHTML += "<td colspan='2' style=''> <img  src= '{{v.dp}}' alt='Display Picture' style='float:left;width:50px;height:50px;padding:1% 1% 1% 1%;'> </td>"
-                    d.innerHTML += '<td> {{m.user}}: {{m.text}} </td>';
+  <head>
+      {% load static %}
+    </head>
+    <body>
+    
+    <!--Signup form-->
+    {% comment %} {% extends "main/header.html" %} {% endcomment %}
+
+    {% block content %} 
+
+    
+
+  {% comment %} {% include 'includes/navigation-fullscreen.html' %} {% endcomment %}
+
+  <main style="font-family:Sen;" class="main-content  mt-0">
+    <section>
+      <div class="page-header min-vh-75">
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
+              <div class="card card-plain mt-8">
+                <div class="card-header pb-0 text-left bg-transparent">
+
+                    <div class="container py-5">
+                        {% include 'main/messages.html' %}
+                        <h1>Signup</h1>
+                        <div>
                             
+                            <table id ="chat-log"> </table>
+                            <input id="chat-message-input" type="text" size="100"><br>
+                            <input id="chat-message-submit" type="button" value="Send">
+                            {{ room_name|json_script:"room-name" }}
+                           
+                            {% for m in prev_messages%}
+                                {%for k, v in users.items%}
+                                    {% if k|upper == m.user|upper %}
+                                        <script>
+                                            d = document.createElement('tr');
+                                            
+                                            d.innerHTML += "<td colspan='2' style=''> <img  src= '{{v.dp}}' alt='Display Picture' style='float:left;width:50px;height:50px;padding:1% 1% 1% 1%;'> </td>"
+                                            d.innerHTML += '<td> {{m.user}}: {{m.text}} </td>';
+                                                    
+                        
+                                            document.querySelector('#chat-log').appendChild(d)
+                                        </script>
+                                    {%endif%}
+                                {%endfor%}
+                            {% endfor %}
+                        
+                            <script>
+                                document.querySelector('#chat-log').value
+                                const roomName = JSON.parse(document.getElementById('room-name').textContent);
+                                const user = "{{user}}";
+                                const chatSocket = new WebSocket(
+                                    'ws://'
+                                    + window.location.host
+                                    + '/ws/room/'
+                                    + roomName
+                                    + '/'
+                                );
+                        
+                                chatSocket.onmessage = function(e) {
+                                    const data = JSON.parse(e.data);
+                                    row = document.createElement("div");
+                                    row.innerHTML = `<p> ${data.user}: ${data.message}</p>`;
+                                    document.querySelector('#chat-log').appendChild(row);
+                                };
+                        
+                                chatSocket.onclose = function(e) {
+                                    console.error('Chat socket closed unexpectedly');
+                                };
+                        
+                                document.querySelector('#chat-message-input').focus();
+                                document.querySelector('#chat-message-input').onkeyup = function(e) {
+                                    if (e.keyCode === 13) {  // enter, return
+                                        document.querySelector('#chat-message-submit').click();
+                                    }
+                                };
+                        
+                                document.querySelector('#chat-message-submit').onclick = function(e) {
+                                    const messageInputDom = document.querySelector('#chat-message-input');
+                                    message = messageInputDom.value;
+                                    message = message.trim()
+                                    if (message.length > 0) {
+                                        chatSocket.send(JSON.stringify({
+                                            'user': user,
+                                            'message': message
+                                        }));
+                                        messageInputDom.value = '';
+                                      }
+                                    
+                                };
+                            </script>
+                        </div>                        
+                    </div>
+                </div>
+                <div class="card-body">
 
-                    document.querySelector('#chat-log').appendChild(d)
-                </script>
-            {%endif%}
-        {%endfor%}
-    {% endfor %}
+                    {% if success %} 
+                
+                        <p class="text-sm mt-3 mb-0 text-center"> 
+                        <div class="text-center">
+                            <a href="{% url 'main:login' %}" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign IN</a>
+                        </div> 
+                        </p>
+  
+                    {% else %}
+                        
+                        <form role="form" method="post" action="#">
 
-    <script>
-        document.querySelector('#chat-log').value
-        const roomName = JSON.parse(document.getElementById('room-name').textContent);
-        const user = "{{user}}";
-        const chatSocket = new WebSocket(
-            'ws://'
-            + window.location.host
-            + '/ws/room/'
-            + roomName
-            + '/'
-        );
+                            {% csrf_token %}
+                            {% for field in form %}
+                              <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                              <div class="mb-3">
+                                {{field}}
+                              </div>
+                              <span class="text-danger">{{ field.errors }}</span>
+                            {% endfor %}
 
-        chatSocket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            row = document.createElement("div");
-            row.innerHTML = `<p> ${data.user}: ${data.message}</p>`;
-            document.querySelector('#chat-log').appendChild(row);
-        };
 
-        chatSocket.onclose = function(e) {
-            console.error('Chat socket closed unexpectedly');
-        };
 
-        document.querySelector('#chat-message-input').focus();
-        document.querySelector('#chat-message-input').onkeyup = function(e) {
-            if (e.keyCode === 13) {  // enter, return
-                document.querySelector('#chat-message-submit').click();
-            }
-        };
+                        </form>
 
-        document.querySelector('#chat-message-submit').onclick = function(e) {
-            const messageInputDom = document.querySelector('#chat-message-input');
-            message = messageInputDom.value;
-            message = message.trim()
-            if (message.length > 0) {
-                chatSocket.send(JSON.stringify({
-                    'user': user,
-                    'message': message
-                }));
-                messageInputDom.value = '';
-              }
-            
-        };
-    </script>
-</body>
+                    {% endif %}
+                    
+                </div>
+
+                <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                  <p class="mb-4 text-sm mx-auto">
+                    {% url 'admin_password_reset' as password_reset_url %}
+                    {% if password_reset_url %}
+                    <a href="{{ password_reset_url }}" class="text-info text-gradient font-weight-bold">
+                        Forgotten your password or username?
+                    </a>
+                    {% endif %}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
+                <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('{% static 'main/login_page_background.jpg' %}')"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  {% comment %} {% include 'includes/footer-fullscreen.html' %} {% endcomment %}
+
+{% endblock content %}
+
+    </body>
 </html>
