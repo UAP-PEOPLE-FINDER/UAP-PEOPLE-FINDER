@@ -22,18 +22,35 @@
   <main style="font-family:Sen;" class="main-content  mt-0">
     <section>
       <div class="page-header min-vh-75">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-xl-3 col-lg-5 col-md-6 d-flex flex-column mx-auto">
+        <div class="container-fluid py-4">
+          <div class="row mt-4">
+            <div class="col-xl-5 col-lg-5 col-md-6 d-flex flex-column mx-auto">
               <div class="card mt-8">
                 <div class="card-header pb-0 text-left bg-transparent">
                     {% include 'main/messages.html' %}
                     {% load crispy_forms_tags %}         
                     <!--Register--> 
-                    <img  src= '{{ dp }}' alt="Display Picture" style="float:right;width:150px;height:150px;padding:20px 20px 20px 20px; z-index: 7;">
-                    <div class="container py-5">
-                        
-                        <h1>Profile</h1>
+                    <div class="container py-1">
+                      <div class="table-responsive">
+                        <table class="table align-items-center mb-0">
+                            <tr>
+                                <td>
+                                    <div class="d-flex flex-column justify-content-center">
+                                      <h1>Profile</h1>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <div>
+                                          <img class='avatar avatar-l me-2' src= '{{ dp }}' alt="Display Picture" style="float:right;width:150px;height:150px;padding:20px 20px 20px 20px; z-index: 7;">
+                                        </div>
+                                            
+                                    </div>
+                                </td>
+                             <tr>
+                            </table>
+                        </div>
+                      
                         <form method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             {{ profile_form|crispy }}
