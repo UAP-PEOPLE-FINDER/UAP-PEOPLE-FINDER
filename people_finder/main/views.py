@@ -500,7 +500,7 @@ def room(request, room_name, no_of_message=10):
     for u in users:
         user_profile[str(u.username)] = {'dp':u.display_picture.url, 'first_name':u.first_name, 'last_name':u.last_name}
 
-    return render(request, "main/room.html", {"user": str(request.user), 
+    return render(request, "main/room.html", {"user": request.user, 
                                               "room_name": room_name, 
                                               "prev_messages":messages, 
                                               "no_of_message": no_of_message,
