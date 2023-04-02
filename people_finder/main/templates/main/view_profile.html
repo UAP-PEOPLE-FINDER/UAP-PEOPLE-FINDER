@@ -1,58 +1,123 @@
+
 <!DOCTYPE html>
+{% extends 'main/app/base.html' %}
+{% load i18n static admin_soft %}
+{% load admin_urls %}
+
 <html>
   <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/3.0.0/css/ionicons.css" rel="stylesheet">
       {% load static %}
-      <link rel="stylesheet" href="{% static 'main/theme.css' %}">
     </head>
     <body>
-
-    {% include 'main/navbar.html' %}
-    {% include 'main/messages.html' %}
+    
     <!--Signup form-->
-    <!-- {% comment %} {% extends "main/header.html" %} {% endcomment %} -->
+    {% comment %} {% extends "main/header.html" %} {% endcomment %}
 
     {% block content %} 
 
-    {% load crispy_forms_tags %}         
-    
-    <!--Register--> 
-    <div class="container py-5">
-        <img  src= '{{ profile.display_picture }}' alt="Display Picture" style="float:left;width:150px;height:150px;padding:20px 20px 20px 20px; z-index: 7;">
-        {% if profile.first_name != "" %}
-          <h2 style="padding-top:3%">{{profile.first_name}} {{profile.last_name}}</h2>
-        {% else %}
-          <h2 style="padding-top:3%">{{profile.email}}</h2>
-        {% endif %}
-        {% if profile.self_profile %}
-        <br>
-        {% else %}
-        <form method="POST">
-          {% csrf_token %}
-          {% if profile.isFriend %}
-            <button name = "unfriend" type="Submit" class="btn btn-danger"> Unfriend </button>
-            <button name = "send_message" type="Submit" class="btn btn-outline-primary"> Send Message</button>
-          {% elif profile.sentRequestByMe %}
-            <button name= "cancel_req" type="Submit" class="btn btn-danger"> Cancel Friend Request </button>
-          {% elif profile.sentRequestByThem %}
-            <button name= "reject_req" type="Submit" class="btn btn-danger"> Reject Friend Request </button>
-            <button name= "accept_req" type="Submit" class="btn btn-primary"> Accept Friend Request </button>
-          {% else %}
-            <button name ="send_req" type="Submit" class="btn btn-outline-primary"> Send Friend Request </button>
-          {% endif %}
-          </form>
-        {% endif%}
-        <h6 style="padding-top:5%">Interest: {{profile.interest}}</h3>
-        <h6 style="padding-top:5%">Bio: {{profile.bio}}</h3>
-        <h6 style="padding-top:5%">Link: <a href={{profile.link}}>{{profile.link}}</a></h3>
-        {% comment %} <p class="text-right">If you already have an account, <a href="login">login</a> instead.</p> {% endcomment %}
-    </div>
     
 
-    {% endblock %}
+  {% comment %} {% include 'includes/navigation-fullscreen.html' %} {% endcomment %}
+
+  <main style="font-family:Sen;" class="main-content  mt-0">
+    <section>
+      <div class="page-header min-vh-75">
+            <div style="text-align:center;" class="container-fluid py-4">
+                
+                <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
+                    <div class="row">
+                        <div class="card card-plain mt-8">
+                            <div class="card-header pb-0 text-left bg-transparent">
+                              {% load crispy_forms_tags %}         
+    
+                              <!--Register--> 
+                              <div class="table-responsive">
+                                  <table class="table align-items-center mb-0">
+                                    <tr><td>
+                                      <div>
+                                      <img  class="avatar avatar-xxl me-1"src= '{{ profile.display_picture }}' alt="Display Picture">
+                                      </div>
+                                    </td>
+                                    <td>
+                                      {% if profile.first_name != "" %}
+                                        <h2 style="padding-top:3%">{{profile.first_name}} {{profile.last_name}}</h2>
+                                      {% else %}
+                                        <h2 style="padding-top:3%">{{profile.email}}</h2>
+                                      {% endif %}
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    {% if profile.self_profile %}
+                                  
+                                    {% else %}
+                                    <form method="POST">
+                                      {% csrf_token %}
+                                      {% if profile.isFriend %}
+                                        <td>
+                                        <button name = "unfriend" type="Submit" class="btn btn-danger"> Unfriend </button>
+                                        </td>
+                                        <td>
+                                        <button name = "send_message" type="Submit" class="btn btn-outline-primary"> Send Message</button>
+                                        </td>
+                                      {% elif profile.sentRequestByMe %}
+                                        <td>
+                                        <button name= "cancel_req" type="Submit" class="btn btn-danger"> Cancel Friend Request </button>
+                                        </td>
+                                      {% elif profile.sentRequestByThem %}
+                                        <td>
+                                        <button name= "reject_req" type="Submit" class="btn btn-danger"> Reject Friend Request </button>
+                                        </td>
+                                        <td>
+                                        <button name= "accept_req" type="Submit" class="btn btn-primary"> Accept Friend Request </button>
+                                        </td>
+                                      {% else %}
+                                        <td>
+                                        <button name ="send_req" type="Submit" class="btn btn-outline-primary"> Send Friend Request </button>
+                                        </td>
+                                      {% endif %}
+                                      </form>
+                                    {% endif%}
+                                  
+                                  </tr>
+                                  
+                                  
+                                    {% comment %} <p class="text-right">If you already have an account, <a href="login">login</a> instead.</p> {% endcomment %}
+                                  </table>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
+                  <div class="row">
+                    <div class="card card-plain mt-2">
+                      <table>
+                      <tr>
+                        <td>
+                        <h6 style="padding-top:5%">{{profile.interest}}</h3>
+                        <td>
+                      </tr>
+                      <tr>
+                        <td>
+                        <h6 style="padding-top:5%">{{profile.bio}}</h3>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                        <h6 style="padding-top:5%"><a class="btn bg-gradient-primary mt-3 w-100" target="_blank" href={{profile.link}}>{{profile.link}}</a></h3>
+                        </td>
+                      </tr>
+                    </table>
+                    </div>
+                  </div>
+                </div>     
+            </div>
+    </section>
+  </main>
+
+  {% comment %} {% include 'includes/footer-fullscreen.html' %} {% endcomment %}
+
+{% endblock content %}
 
     </body>
 </html>
