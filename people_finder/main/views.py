@@ -487,6 +487,10 @@ def message_send(request, profile_id):
 @never_cache
 @login_required(login_url="main:login")
 def room(request, room_name, no_of_message=10):
+    def get_user(other_user, request):
+        for u in other_user:
+            if u.username != request.user.username:
+                return u
     # room_name will be the id of our friends relation.
     messages = Message.objects.order_by('-created').filter(room=ChatRoom.objects.get(id=room_name))[0:no_of_message:-1]
     users = set()
@@ -499,9 +503,13 @@ def room(request, room_name, no_of_message=10):
             pass
     for u in users:
         user_profile[str(u.username)] = {'dp':u.display_picture.url, 'first_name':u.first_name, 'last_name':u.last_name}
+    other_users = set([Friend.objects.get(id=room_name).outgoing, Friend.objects.get(id=room_name).incoming]) #The last other user found
+    other_user = get_user(other_users, request)
+    other_user_profile = Profile.objects.get(username=other_user)
 
     return render(request, "main/room.html", {"user": request.user, 
                                               "room_name": room_name, 
                                               "prev_messages":messages, 
                                               "no_of_message": no_of_message,
-                                              "users":user_profile})
+                                              "users":user_profile,
+                                              "other_user":other_user_profile})
