@@ -486,7 +486,7 @@ def message_send(request, profile_id):
 
 @never_cache
 @login_required(login_url="main:login")
-def room(request, room_name, no_of_message=10):
+def room(request, room_name, no_of_message=50):
     def get_user(other_user, request):
         for u in other_user:
             if u.username != request.user.username:
