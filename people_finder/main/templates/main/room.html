@@ -98,8 +98,9 @@
                                     }
                                     else{
                                         dv.innerHTML += `<div class="d-flex flex-column justify-content-center"><span style="background: rgb(119,214,244);background: linear-gradient(90deg, rgba(119,214,244,0.47941183309261204) 0%, rgba(180,255,154,1) 0%, rgba(191,249,173,1) 100%); ; font-family:Sen;font-size:105%;border-radius:10px;padding:1% 1% 1% 1%;border-style:solid;border-color:#f1c40f;border-width: 0.1px"> ${data.message} </span> </div>`;
-                                        dv.innerHTML += '</tr>'
+                                        
                                     }
+                                    dv.innerHTML += '</tr>'
                         
                                     document.querySelector('#chat-log').appendChild(dv)
                                     scrollToBottom();
