@@ -36,29 +36,33 @@
                             {% endif %}
                         {%endfor%}
                         
-                        <div>
+                        <div style="height:500px; overflow:auto;" class="card-body p-3">
                             
-                            <table id ="chat-log"> </table>
-                            <input id="chat-message-input" type="text" size="100"><br>
-                            <input id="chat-message-submit" type="button" value="Send">
+                            <table class = "table align-items-center mb-0" id ="chat-log"> </table>
+                            
                             {{ room_name|json_script:"room-name" }}
                            
                             {% for m in prev_messages%}
                                 {%for k, v in users.items%}
                                     {% if k|upper == m.user|upper %}
                                         <script>
-                                            d = document.createElement('tr');
+                                            dv = document.createElement('div');
+                                            dv.className = "card-body p-3";
+                                            dv.innerHTML += '<tr>' 
                                             
-                                            d.innerHTML += "<td colspan='2' style=''> <img  src= '{{v.dp}}' alt='{{v.first_name}} {{v.last_name}}' style='float:left;width:50px;height:50px;padding:1% 1% 1% 1%;'> </td>"
-                                            d.innerHTML += '<td> : {{m.text}} </td>';
-                                                    
+                                            dv.innerHTML += "<td colspan='2' style=''> <img class='avatar avatar-sm me-2' src= '{{v.dp}}' title='{{v.first_name}} {{v.last_name}}' style='float:left;width:50px;height:50px;padding:1% 1% 1% 1%;'> </td>"
+                                            dv.innerHTML += '<td class="align-middle text-center text-sm"><span style="background: rgb(119,214,244);background: linear-gradient(90deg, rgba(119,214,244,0.47941183309261204) 0%, rgba(168,212,236,1) 0%, rgba(160,231,246,1) 100%); ; font-family:Sen;font-size:105%;border-radius:10px;padding:1% 1% 1% 1%;border-style:solid;border-color:#f1c40f;border-width: 0.1px"> {{m.text}} </span> </td>';
+                                            dv.innerHTML += '</tr>'
+                                            
                         
-                                            document.querySelector('#chat-log').appendChild(d)
+                                            document.querySelector('#chat-log').appendChild(dv)
                                         </script>
                                     {%endif%}
                                 {%endfor%}
                             {% endfor %}
-                        
+                        </div>
+                            <input id="chat-message-input" type="text" size="100"><br>
+                            <input id="chat-message-submit" type="button" value="Send">
                             <script>
                                 document.querySelector('#chat-log').value
                                 const roomName = JSON.parse(document.getElementById('room-name').textContent);
@@ -103,7 +107,7 @@
                                     
                                 };
                             </script>
-                        </div>                        
+                                                
                     </div>
                 </div>
                 <div class="card-body">
