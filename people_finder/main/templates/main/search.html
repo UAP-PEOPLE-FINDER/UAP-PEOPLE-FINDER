@@ -19,13 +19,12 @@
 
   {% comment %} {% include 'includes/navigation-fullscreen.html' %} {% endcomment %}
 
-  <main style="font-family:Sen;" class="main-content  mt-0">
+  <main style="font-family:Sen;" class="main-content mt-0">
     <section>
       <div class="page-header min-vh-75">
             <div style="text-align:center;" class="container-fluid py-4">
-                
-                <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
-                    <div class="row">
+                <div class="row">
+                        <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
                         <div class="card mt-8">
                             <div class="card-header pb-0 text-left bg-transparent">
                                 {% load crispy_forms_tags %}         
@@ -42,9 +41,14 @@
                         </div>
                         </div>
                     </div>
+            </div>
+        </div>
+    </section>
+    <section>
+            <div style="text-align:center;" class="container-fluid py-4">
             {% if table %}
-                <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
-                    <div class="row">
+                <div class="row mx-4">
+                        <div class="col-xl-6 col-lg-5 col-md-6 d-flex flex-column mx-auto">
                             <div class="card mt-4" style=";padding:3% 3% 3% 3%">
                                 <h2> Search Results </h2>
                                 <div class="table-responsive">
@@ -86,6 +90,7 @@
 
 
 
+                    </div>
                 </div>
                 
             </div>
