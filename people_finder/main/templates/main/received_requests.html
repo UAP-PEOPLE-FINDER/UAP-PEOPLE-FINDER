@@ -1,61 +1,128 @@
+
 <!DOCTYPE html>
+{% extends 'main/app/base.html' %}
+{% load i18n static admin_soft %}
+{% load admin_urls %}
+
 <html>
   <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/3.0.0/css/ionicons.css" rel="stylesheet">
       {% load static %}
-      <link rel="stylesheet" href="{% static 'main/theme.css' %}">
     </head>
     <body>
-
-    {% include 'main/navbar.html' %}
+    
     <!--Signup form-->
     {% comment %} {% extends "main/header.html" %} {% endcomment %}
 
     {% block content %} 
 
-    {% load crispy_forms_tags %}         
     
-    <!--Register--> 
-    <div class="container py-5">
-        {% include 'main/messages.html' %}
-        <h2 class="font-weight-bold mt-3"> Received Friend Requests </h2>
-		<hr>
-        <br>    
-            <a href="{% url 'main:sent_requests' %}">
-                <button name= "sent_req" type="Submit" class="btn btn-outline-primary"> Friend Requests Sent </button>
-            </a>
-        <br>
-        <br>
-        {% if table %}
-        <table>
-            {% for profile in table%}
-            <tr>
-                <td>
-                    <img  src= '{{ profile.display_picture }}' style="float:left;width:150px;height:150px;padding:20px 20px 20px 20px; z-index: 7;" alt="Display Picture"><br>
-                </td>
-                <td> <h6>
-                {{profile.first_name}} {{profile.last_name}} 
-                </h6>
-                </td>
-                <td style='padding:10%'>
-                    <a href="{% url 'main:view_profile' profile.username_id%}">
-                    <button type="Submit" class="btn btn-outline-primary"> View Profile</button>
-                    </a>
-                </td>
-            </tr>
-        {% comment %} {% load django_tables2 %} 
-        {% render_table table %} {% endcomment %}
-            {% endfor %}
-        {% else %}
-            <h2> You do not have any pending requests. </h2>
-        {% endif %}
-        </table>
-    </div>
 
-    {% endblock %}
+  {% comment %} {% include 'includes/navigation-fullscreen.html' %} {% endcomment %}
+
+  <main style="font-family:Sen;" class="main-content mt-0">
+    <section>
+        
+      <div class="page-header min-vh-75">
+            <div style="text-align:center;" class="container-fluid py-4">
+
+                <div class="row mt-2">
+                    <div style="width:800px; margin:0 auto;" class="">
+                        <div class="card mt-2" style="margin:0% 0% 0% 00%;padding:3% 3% 3% 3%">
+                                <div class="table-responsive">
+                                    <table class="table align-items-center mb-0">
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <a href="{% url 'main:received_requests' %}">
+                                                        <button type="Submit" class="btn bg-gradient-primary">Friend Requests</button>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <a href="{% url 'main:sent_requests' %}">
+                                                        <button name= "sent_req" type="Submit" class="btn bg-gradient-primary">Requests Sent</button>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <a href="{% url 'main:friends' %}">
+                                                        <button type="Submit" class="btn bg-gradient-dark"> Friend List </button>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+
+                    
+                    <div class="row mt-2">
+                        <div style="width:800px; margin:0 auto;" class="">
+                            <div class="card mt-1" style="margin:0% 0% 0% 00%;padding:3% 3% 3% 3%">
+                                <h2> Friend Requests </h2>
+                                <div class="table-responsive">
+                                            <table class="table align-items-center mb-0">
+                                                {% for profile in table%}
+                                                <tr>
+                                                    <td>
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                            <div>
+                                                                <img  class='avatar avatar-l me-2' src= '{{ profile.display_picture }}' alt="Display Picture"><br>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                                <h6>
+                                                                    {{profile.first_name}} {{profile.last_name}} 
+                                                                </h6>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                            <a href="{% url 'main:view_profile' profile.username_id%}">
+                                                                <button type="Submit" class="btn btn-white btn-sm w-100 mb-0"> View Profile</button>
+                                                            </a>
+                                                        </div>
+                                                </tr>
+                                            {% comment %} {% load django_tables2 %} 
+                                            {% render_table table %} {% endcomment %}
+                                                {% endfor %}
+                                                {% if table %}
+                                                {% else %}
+                                                    <h3> You do not have incoming friend requests. </h3>
+                                            {% endif %}
+                                            </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    
+
+
+                        
+                </div>
+                
+                <div class="col-md-7">
+                    <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
+                      <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-7 ms-n6" style="background-image:url(https://source.unsplash.com/random/?hd_wallpaper&1)"></div>
+                    </div>
+            </div>
+        
+    </section>
+  </main>
+
+  {% comment %} {% include 'includes/footer-fullscreen.html' %} {% endcomment %}
+
+{% endblock content %}
 
     </body>
 </html>
