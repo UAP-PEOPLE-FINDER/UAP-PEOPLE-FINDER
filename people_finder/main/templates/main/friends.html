@@ -18,14 +18,13 @@
     
 
   {% comment %} {% include 'includes/navigation-fullscreen.html' %} {% endcomment %}
+<div class="page-header min-vh-0">
+    <div style="margin-top:10%" class="container py-4">
+        <div class="card mt-2">
+            <table class="table align-items-center mb-0">
+                <tr><div class="d-flex flex-column justify-content-center"><td colspan='1'>
 
-  <main style="font-family:Sen;" class="main-content mt-0">
-    <section>
-        <div class="page-header min-vh-50">
-            <div style="text-align:center;" class="container-fluid py-4">
-
-                <div class="row">
-                    <div style="width:800px; margin:0 auto;" class="">
+                    <div class="d-flex flex-column justify-content-center">
                         <div class="card mt-2" style="margin:0% 0% 0% 00%;padding:3% 3% 3% 3%">
                             <div class="table-responsive">
                                         <table class="table align-items-center mb-0">
@@ -55,63 +54,59 @@
                                         </table>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-    </section>
-    
-    <section style="overflow:hidden;padding:3% 3% 3% 3%">
-                    <div class="row mt-2">
-                        <div style="width:800px; margin:0 auto;" class="">
-                            <div class="card mt-0" style="margin:0% 0% 0% 00%;padding:3% 3% 3% 3%">
-                                <h2> Friend List </h2>
-                                <div class="table-responsive">
-                                            <table class="table align-items-center mb-0">
-                                                {% for profile in table%}
-                                                <tr>
-                                                    <td>
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <div>
-                                                                <img  class='avatar avatar-l me-2' src= '{{ profile.display_picture }}' alt="Display Picture"><br>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                                <h6>
-                                                                    {{profile.first_name}} {{profile.last_name}} 
-                                                                </h6>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <a href="{% url 'main:view_profile' profile.username_id%}">
-                                                                <button type="Submit" class="btn btn-white btn-sm w-100 mb-0"> View Profile</button>
-                                                            </a>
-                                                        </div>
-                                                </tr>
-                                            {% comment %} {% load django_tables2 %} 
-                                            {% render_table table %} {% endcomment %}
-                                                {% endfor %}
-                                                {% if table %}
-                                                {% else %}
-                                                    <h3> You do not have any friends yet. </h3>
-                                            {% endif %}
-                                            </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>  
 
-                            
-                </div>
+                </td></div></tr>
+
                 
-        
-    </section>
-    
-    
-  </main>
-  
+                <tr><div class="d-flex flex-column justify-content-center"><td colspan='1'>
+
+                <div class="d-flex flex-column justify-content-center">
+                    <div class="card mt-1" style="margin:0% 0% 0% 00%;padding:3% 3% 3% 3%">
+                        <h2> Friend List </h2>
+                        <div class="table-responsive">
+                                    <table class="table align-items-center mb-0">
+                                        {% for profile in table%}
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <div>
+                                                        <img  class='avatar avatar-l me-2' src= '{{ profile.display_picture }}' alt="Display Picture"><br>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex flex-column justify-content-center">
+                                                        <h6>
+                                                            {{profile.first_name}} {{profile.last_name}} 
+                                                        </h6>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <a href="{% url 'main:view_profile' profile.username_id%}">
+                                                        <button type="Submit" class="btn btn-white btn-sm w-100 mb-0"> View Profile</button>
+                                                    </a>
+                                                </div>
+                                        </tr>
+                                    {% comment %} {% load django_tables2 %} 
+                                    {% render_table table %} {% endcomment %}
+                                        {% endfor %}
+                                        {% if table %}
+                                        {% else %}
+                                            <h3> You do not have any friends yet. </h3>
+                                    {% endif %}
+                                    </table>
+                            </div>
+                        </div>
+            
+                </div>
+
+
+                </td></div></tr>
+            </table>
+        </div>
+    </div>
+</div>
 
   {% comment %} {% include 'includes/footer-fullscreen.html' %} {% endcomment %}
 
