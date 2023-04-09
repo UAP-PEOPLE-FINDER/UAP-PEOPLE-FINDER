@@ -23,8 +23,8 @@ urlpatterns = [
     path("received_requests", views.received_requests, name="received_requests"),
     path("sent_requests", views.sent_requests, name="sent_requests"),
     path("view_profile/<int:profile_id>", views.view_profile, name="view_profile"),
-    path("room/<str:room_name>/", views.room, name="room"), 
-
+    path("room/<str:room_name>/", views.room, name="room"),
+    path("notification", views.notification, name="notification"),
 ]
 if settings.DEBUG:  # new
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+{% extends 'main/app/base.html' %}
+{% load i18n static admin_soft %}
+{% load admin_urls %}
+
+<html>
+  <head>
+      {% load static %}
+    </head>
+    <body>
+    
+    <!--Signup form-->
+    {% comment %} {% extends "main/header.html" %} {% endcomment %}
+
+    {% block content %} 
+
+
+<main style="overflow-y: scroll;" class="main-content position-relative h-100 border-radius-lg ps ps--active-y">
+    <div style=";margin-top:10em" class="container py-4">
+        <div style="" class="card mt-2">
+                    <div class="d-flex flex-column justify-content-center">
+                        <div class="card mt-2" style="margin:0% 0% 0% 00%;padding:3% 3% 3% 3%">
+                            <div class="table-responsive">
+                                {% if notification %}
+                                <table class="table align-items-center mb-0">
+                                {% for n in notification%}
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        {% if "[INCOMING_REQ]" in n.text%}
+                                                        <a href="{% url 'main:received_requests' %}"> You have a new friend request! </a>
+                                                        {%elif "[INCOMING_MSG]" in n.text%}
+                                                        <a href="{{n.link}}"> You have a new message! </a>
+                                                        {%endif%}
+                                                    </div>
+                                                </td>
+                                        </table>
+                                {%endfor%}
+                                {%else%}
+                                <h3> You have no new notification.</h3>
+                                {%endif%}
+                                </div>
+                            </div>
+
+        <div class="card-footer text-center pt-0 px-lg-2 px-1">
+        </div>
+    </div>
+</main>
+  {% comment %} {% include 'includes/footer-fullscreen.html' %} {% endcomment %}
+
+{% endblock content %}
+
+    </body>
+</html>

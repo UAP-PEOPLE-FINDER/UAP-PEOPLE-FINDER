@@ -11,7 +11,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
-from main.models import Profile, ListofInterests, Interest, Friend, ChatRoom, Message
+from main.models import Profile, ListofInterests, Interest, Friend, ChatRoom, Message, Notification
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm
 from django.core.mail import send_mail, BadHeaderError
@@ -312,7 +312,8 @@ def view_profile(request, profile_id):
         return redirect("main:profile")    
     
     curr_user = request.user
-    
+    prof_user_profile = Profile.objects.get(username=prof_user)
+    curr_user_profile = Profile.objects.get(username=curr_user)
     if request.method == "POST":
         f1 = Friend.objects.filter(incoming=prof_user, outgoing=curr_user)
         f1 = f1[0] if f1 else None
@@ -323,6 +324,11 @@ def view_profile(request, profile_id):
         if "send_req" in request.POST:
             if not (f2 or f1):
                 Friend.objects.create(incoming=prof_user, outgoing=curr_user)
+                Notification.objects.create(
+                    user=prof_user,
+                    message="[INCOMING_REQ]",
+                    link="",
+                )
             else:
                 messages.error(
                     request, mark_safe("You already have a incoming friend request!")
@@ -522,3 +528,11 @@ def room(request, room_name, no_of_message=50):
                                               "no_of_message": no_of_message,
                                               "users":user_profile,
                                               "other_user":other_user_profile})
+
+@never_cache
+@login_required(login_url="main:login")
+def notification(request, no_of_notifications=20):
+    notifications = Notification.objects.order_by('-created').filter(user=request.user)[0:no_of_notifications:-1]
+    
+    return render(request, "main/notification.html", {"user": request.user, 
+                                              "notifications": notifications,})

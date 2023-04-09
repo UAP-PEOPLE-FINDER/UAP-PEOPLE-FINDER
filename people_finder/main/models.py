@@ -45,3 +45,9 @@ class Message(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     text = models.TextField(max_length=1024) 
 
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.TextField(max_length=1024) 
+    link = models.TextField(max_length=1024) 
+    created = models.DateTimeField(auto_now_add=True)
+    seen = models.BooleanField(default=False)
