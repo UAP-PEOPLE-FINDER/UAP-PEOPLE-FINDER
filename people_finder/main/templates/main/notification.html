@@ -30,7 +30,7 @@
                                                 <td>
                                                     <div class="d-flex flex-column justify-content-center">
                                                         {% if "[INCOMING_REQ]" in n.message%}
-                                                        <a class="btn btn-default btn-round" href="{% url 'main:received_requests' %}"> You have a new friend request! </a>
+                                                        <a class="btn btn-white btn-sm w-100 mb-0" href="{% url 'main:received_requests' %}"> You have a new friend request! </a>
                                                         {%elif "[INCOMING_MSG]" in n.message%}
                                                         <a href="{{n.link}}"> You have a new message! </a>
                                                         {%endif%}
