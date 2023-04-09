@@ -25,7 +25,7 @@
                                 {% if notifications %}
                                 <table class="table align-items-center mb-0">
                                     <h3> Notifications </h3>
-                                {% for n in notifications %}
+                                            {% for n in notifications %}
                                             <tr>
                                                 <td>
                                                     <div class="d-flex flex-column justify-content-center">
@@ -37,8 +37,8 @@
                                                     </div>
                                                 </td>
                                             </tr>
+                                            {%endfor%}
                                         </table>
-                                {%endfor%}
                                 {%else%}
                                 <h3> You have no new notifications.</h3>
                                 {%endif%}
