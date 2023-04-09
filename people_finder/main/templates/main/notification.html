@@ -22,15 +22,16 @@
                     <div class="d-flex flex-column justify-content-center">
                         <div class="card mt-2" style="margin:0% 0% 0% 00%;padding:3% 3% 3% 3%">
                             <div class="table-responsive">
-                                {% if notification %}
+                                {% if notifications %}
                                 <table class="table align-items-center mb-0">
-                                {% for n in notification%}
+                                    <h1> hello</h1>
+                                {% for n in notifications %}
                                             <tr>
                                                 <td>
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        {% if "[INCOMING_REQ]" in n.text%}
+                                                        {% if "[INCOMING_REQ]" in n.message%}
                                                         <a href="{% url 'main:received_requests' %}"> You have a new friend request! </a>
-                                                        {%elif "[INCOMING_MSG]" in n.text%}
+                                                        {%elif "[INCOMING_MSG]" in n.message%}
                                                         <a href="{{n.link}}"> You have a new message! </a>
                                                         {%endif%}
                                                     </div>
