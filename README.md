@@ -67,7 +67,7 @@ This project is open-source and available under the [MIT License](LICENSE).
 
 ## Author 👨‍💻
 
-**Md. Azim Islam** – The mastermind behind UAP People Finder.
+**Md. Azim Islam** – Author of this project.
 
 - GitHub: [[github.com/azimislam](https://github.com/azimislam)](https://github.com/Azim-Islam)
 - Facebook: https://www.facebook.com/ANHW.ogg/
