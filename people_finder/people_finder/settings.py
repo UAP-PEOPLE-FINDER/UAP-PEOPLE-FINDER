@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     # "daphne",
     'main.apps.MainConfig',
     'admin_soft.apps.AdminSoftDashboardConfig',
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
