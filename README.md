@@ -22,6 +22,7 @@ Welcome to **UAP People Finder** – an innovative social media platform designe
 ## Screenshots 🖼️
 <img src="https://i.ibb.co/vsGpqsf/Untitled-Jun-23-2024-11-44-PM.jpg" width="400" />
 <img src="https://i.ibb.co/8dpg1bG/Screenshot-2024-06-23-235553.png" width="400" />
+<img src="https://i.ibb.co/BZV1Vk0/Screenshot-2024-06-24-000621.png" width="400" />
 
 ## Installation 📦
 
