@@ -19,6 +19,10 @@ Welcome to **UAP People Finder** – an innovative social media platform designe
 - **JavaScript** – Adds interactivity and responsiveness to the user interface. ⚡
 - **Django Channels** – Provides real-time functionality for instant messaging. 📡
 
+## Screenshots 🖼️
+![Login Page](https://i.ibb.co/Q8RLQ8h/Untitled-Jun-23-2024-11-44-PM.jpg "Login Page")
+![Friend List Page](https://i.ibb.co/8dpg1bG/Screenshot-2024-06-23-235553.png)
+
 ## Installation 📦
 
 Follow these steps to get a local copy up and running:
