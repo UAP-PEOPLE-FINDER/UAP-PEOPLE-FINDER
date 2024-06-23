@@ -55,7 +55,7 @@ ALLOWED_HOSTS = ['127.0.0.1', '103.198.137.87', 'peoplefinder.lol']
 # Application definition
 
 INSTALLED_APPS = [
-    "daphne",
+    # "daphne",
     'main.apps.MainConfig',
     'admin_soft.apps.AdminSoftDashboardConfig',
     'django.contrib.admin',

@@ -111,7 +111,7 @@ def login_request(request):
                 messages.error(request, "Invalid username or password.")
         else:
             messages.error(request, "Invalid username or password.")
-    form = AuthenticationForm()
+    form = AuthenticationForm(initial={'username': 'demo', 'password': 'demo@1234'})
     return render(
         request=request, template_name="main/login.html", context={"login_form": form}
     )

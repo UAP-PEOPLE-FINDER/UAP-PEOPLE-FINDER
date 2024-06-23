@@ -16,6 +16,7 @@ channels = {extras = ["daphne"], version = "*"}
 "backports.weakref" = "*"
 cffi = "*"
 django-model-utils = "*"
+tzdata = "*"
 
 [dev-packages]
 autopep8 = "*"
