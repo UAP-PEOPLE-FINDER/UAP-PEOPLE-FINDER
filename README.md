@@ -2,6 +2,9 @@
 
 Welcome to **UAP People Finder** – an innovative social media platform designed to connect people within the UAP community! Built with Django, HTML5, CSS3, and JavaScript, this project brings people closer with seamless social interactions. 🌐
 
+## Live Demo 🔗
+- **A live demo is running at [link](http://peoplefinder.azimdev.me:8080/)**
+
 ## Features ✨
 
 - **Add Friends** – Easily find and connect with people in the UAP network. 🤝
